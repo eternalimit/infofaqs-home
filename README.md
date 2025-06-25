@@ -1,17 +1,14 @@
 
-# InfoFAQs – Dev Branch
+# InfoFAQs – Admin Branch
 
-This is the staging and testbed environment for upcoming features and changes.
+This branch holds secure and administrative content, including protected protocols.
 
-## ⚙️ Use Cases
-- Inject or revise FAQs
-- Test GPT fusion logic
-- Build experimental UI components
+## 🔒 Contents
+- `anti_stripped_kernel.txt`: Core enforcement logic
+- `AdminPhrase.txt`: Verified override phrase
+- `clarity_watchdog_config.md`: Immutable system locks
+- `audit_logs/`: Kernel usage and event history
 
-## 📁 Suggested Files
-- `index_dev.html`
-- `gpt_fusion_tool.py`
-- `autoload_infofaqs.patch`
-- `/drafts` folder for test content
-
-Always test here before merging to `main`.
+## 🛡️ Protocol
+Do not expose this branch publicly.
+Changes require override phrase and admin confirmation.
