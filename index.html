@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Live News Cards</title>
+  <link id="dynamic-favicon" rel="icon" type="image/png" href="favicon.ico">
   <style>
     body {
       font-family: sans-serif;
@@ -82,7 +83,8 @@
         .then(data => {
           const container = document.getElementById("newsCards");
           container.innerHTML = "";
-          if (data.articles) {
+
+          if (data.articles && data.articles.length > 0) {
             data.articles.forEach(article => {
               const card = document.createElement("div");
               card.className = "card";
@@ -96,6 +98,13 @@
               `;
               container.appendChild(card);
             });
+
+            const favicon = document.getElementById("dynamic-favicon");
+            const firstImage = data.articles[0].urlToImage;
+            if (favicon && firstImage) {
+              favicon.href = firstImage;
+            }
+
           } else {
             container.innerHTML = "<p>No results found.</p>";
           }
