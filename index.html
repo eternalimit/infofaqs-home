@@ -2,52 +2,76 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>InfoFAQs Sports Links</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dynamic News Feed</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-50 text-gray-800 p-6">
+<body class="bg-gray-100 text-gray-800 p-6">
 
-  <header class="text-center mb-10">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Info_icon_002.svg" alt="InfoFAQs Logo" class="mx-auto mb-4 w-16 h-16">
-    <h1 class="text-4xl font-bold">Welcome to InfoFAQs</h1>
-    <p class="text-lg text-gray-600">Live Sports Headlines</p>
+  <header class="mb-10 text-center">
+    <h1 class="text-4xl font-bold">InfoFAQs Dynamic Content Feed</h1>
+    <p class="text-lg text-gray-500">Auto-styled UI with rotating placeholder headlines</p>
   </header>
 
-  <main class="max-w-3xl mx-auto space-y-4">
-    <!-- List of News Links -->
-    <div class="space-y-4">
-      
-      <!-- Link Card Template -->
-      <div class="flex items-center space-x-4 p-4 bg-white rounded-lg shadow hover:shadow-md transition">
-        <img src="https://www.google.com/s2/favicons?domain=weirtondailytimes.com" class="w-6 h-6" alt="Favicon">
-        <a href="https://www.weirtondailytimes.com/sports/2025/06/rodgers-pretty-sure-the-2025-season-will-be-his-last" 
-           target="_blank" 
-           class="text-blue-700 hover:underline text-md font-medium">
-          Rodgers ‘pretty sure’ the 2025 season will be his last
-        </a>
-      </div>
-
-      <div class="flex items-center space-x-4 p-4 bg-white rounded-lg shadow hover:shadow-md transition">
-        <img src="https://www.google.com/s2/favicons?domain=sports.yahoo.com" class="w-6 h-6" alt="Favicon">
-        <a href="https://sports.yahoo.com/nba/breaking-news/article/nba-free-agency-2025-latest-news-rumors-trades-ahead-of-nba-draft-as-kyrie-irving-reaches-new-deal-with-mavs-celtics-deal-kristaps-porzingis-131459233.html" 
-           target="_blank" 
-           class="text-blue-700 hover:underline text-md font-medium">
-          NBA Draft: Rumors & Kyrie Irving Deal
-        </a>
-      </div>
-
-      <div class="flex items-center space-x-4 p-4 bg-white rounded-lg shadow hover:shadow-md transition">
-        <img src="https://www.google.com/s2/favicons?domain=skysports.com" class="w-6 h-6" alt="Favicon">
-        <a href="https://www.skysports.com/football/transfer-paper-talk" 
-           target="_blank" 
-           class="text-blue-700 hover:underline text-md font-medium">
-          Isak offer, Rashford loan talk – Paper Talk
-        </a>
-      </div>
-
-    </div>
+  <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Dynamic cards will be injected here -->
   </main>
+
+  <script>
+    function generateHeadline() {
+      const verbs = ["announces", "reveals", "launches", "criticizes", "praises", "explores", "questions"];
+      const topics = ["Supreme Court ruling", "presidential debate", "Senate bill", "economic forecast", "education reform", "infrastructure project", "national emergency"];
+      const sources = ["newswire.ai", "techinsider.net", "worldtoday.org", "digipolitics.io", "futuredaily.com"];
+      const images = [
+        "https://placekitten.com/400/200",
+        "https://placebear.com/400/200",
+        "https://picsum.photos/400/200",
+        "https://placebeard.it/400x200",
+        "https://placeimg.com/400/200/tech"
+      ];
+      const summaries = [
+        "Analysts weigh in on the implications of this announcement.",
+        "Industry insiders call it a major turning point.",
+        "The update has sparked debate across sectors.",
+        "This move could shift the national landscape.",
+        "A controversial yet significant development."
+      ];
+
+      const rand = arr => arr[Math.floor(Math.random() * arr.length)];
+      const source = rand(sources);
+
+      return {
+        title: `${rand(["President", "Governor", "Senate", "White House", "Congress"])} ${rand(verbs)} ${rand(topics)}`,
+        source,
+        url: `https://${source}/article-${Math.floor(Math.random() * 10000)}`,
+        summary: rand(summaries),
+        image: rand(images)
+      };
+    }
+
+    const main = document.querySelector("main");
+    main.innerHTML = "";
+    const headlines = Array.from({ length: 6 }, generateHeadline);
+
+    headlines.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "bg-white rounded-xl shadow hover:shadow-lg transition duration-300 overflow-hidden";
+      card.innerHTML = `
+        <img src="${item.image}" alt="Preview" class="w-full h-48 object-cover">
+        <div class="p-4">
+          <div class="flex items-center space-x-2 mb-2">
+            <img src="https://www.google.com/s2/favicons?domain=${item.source}" class="w-5 h-5" alt="favicon">
+            <span class="text-xs text-gray-500">${item.source}</span>
+          </div>
+          <h2 class="text-lg font-semibold leading-snug mb-1">
+            <a href="${item.url}" target="_blank" class="hover:underline text-blue-700">${item.title}</a>
+          </h2>
+          <p class="text-sm text-gray-600">${item.summary}</p>
+        </div>
+      `;
+      main.appendChild(card);
+    });
+  </script>
 
 </body>
 </html>
