@@ -1,35 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>InfoFAQs</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Live News Cards</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      background: #f2f2f2;
+      color: #222;
+    }
+    .container {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    input[type="text"] {
+      width: 70%;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      margin-left: 0.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+    .card img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+    }
+    .card-content {
+      padding: 1rem;
+    }
+    .card-content h3 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-content p {
+      font-size: 0.85rem;
+      color: #555;
+    }
+    .card-content a {
+      text-decoration: none;
+      color: #1e88e5;
+    }
+  </style>
 </head>
-<body class="bg-white text-gray-900">
-  <header class="bg-white p-6 text-center border-b">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Info_icon_002.svg" alt="InfoFAQs Logo" class="mx-auto mb-4 w-16 h-16">
-    <h1 class="text-4xl font-bold mb-2">Welcome to InfoFAQs</h1>
-    <p class="text-lg text-gray-700">A network of powerful GPT tools built for clarity, support, and action.</p>
-    <div class="mt-4 text-sm text-gray-500">
-      Clarity v130™ | Clarity Protocol GPT<br>
-      © 2025 InfoFAQs | <a href="mailto:contact@infofaqs.com" class="underline">Contact</a>
-    </div>
-  </header>
+<body>
+  <div class="container">
+    <h1>🗞️ Live News Dashboard</h1>
+    <input type="text" id="searchInput" placeholder="Enter topic (e.g., NVDA, sports, AI)" />
+    <button onclick="fetchNews()">Search</button>
 
-  <main class="p-6 text-center">
-    <p class="mt-6">
-      Explore the 
-      <a href="echo_mining_dashboard.html" class="text-blue-600 underline">
-        Echo Mining Framework FAQs
-      </a>.
-    </p>
-    <p class="mt-4">
-      🔗 <a href="https://eternalimit.github.io/infofaqs-home/home_infofaqs_com.html"
-            class="text-blue-700 underline" target="_blank" rel="noopener noreferrer">
-        Visit Live InfoFAQs Homepage
-      </a>
-    </p>
-  </main>
+    <div id="newsCards" class="grid"></div>
+  </div>
+
+  <script>
+    const NEWS_API_KEY = 'a05fa6bb56a9491eabc69bf066658541';
+
+    function fetchNews() {
+      const query = document.getElementById("searchInput").value || "top headlines";
+      const url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(query)}&pageSize=8&sortBy=publishedAt&apiKey=${NEWS_API_KEY}`;
+
+      fetch(url)
+        .then(res => res.json())
+        .then(data => {
+          const container = document.getElementById("newsCards");
+          container.innerHTML = "";
+          if (data.articles) {
+            data.articles.forEach(article => {
+              const card = document.createElement("div");
+              card.className = "card";
+              card.innerHTML = `
+                <img src="${article.urlToImage || 'https://via.placeholder.com/400x200'}" alt="News image">
+                <div class="card-content">
+                  <h3>${article.title}</h3>
+                  <p><strong>${article.source.name}</strong> • ${new Date(article.publishedAt).toLocaleString()}</p>
+                  <a href="${article.url}" target="_blank">Read more</a>
+                </div>
+              `;
+              container.appendChild(card);
+            });
+          } else {
+            container.innerHTML = "<p>No results found.</p>";
+          }
+        })
+        .catch(error => {
+          console.error(error);
+          document.getElementById("newsCards").innerHTML = "<p>Error loading news.</p>";
+        });
+    }
+  </script>
 </body>
 </html>
