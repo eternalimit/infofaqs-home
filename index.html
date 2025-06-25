@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>InfoFAQs</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-white text-gray-900">
+
+  <!-- Header -->
   <header class="bg-white p-6 text-center border-b">
     <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Info_icon_002.svg" alt="InfoFAQs Logo" class="mx-auto mb-4 w-16 h-16">
     <h1 class="text-4xl font-bold mb-2">Welcome to InfoFAQs</h1>
@@ -17,6 +19,7 @@
     </div>
   </header>
 
+  <!-- Links -->
   <main class="p-6 text-center">
     <p class="mt-6">
       Explore the 
@@ -31,5 +34,44 @@
       </a>
     </p>
   </main>
-</body>
-</html>
+
+  <!-- News Feed Header -->
+  <section class="bg-gray-100 text-gray-800 p-6">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl font-bold">InfoFAQs Live News Feed</h2>
+      <p class="text-lg text-gray-500">Up-to-date headlines styled with Tailwind and powered by NewsAPI</p>
+    </div>
+
+    <!-- News Feed Cards -->
+    <div id="news-feed" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </section>
+
+  <!-- News Script -->
+  <script>
+    const apiKey = "a05fa6bb56a9491eabc69bf066658541";
+    const endpoint = `https://newsapi.org/v2/top-headlines?country=us&category=technology&pageSize=6&apiKey=${apiKey}`;
+
+    fetch(endpoint)
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById("news-feed");
+        container.innerHTML = "";
+
+        data.articles.forEach((article, i) => {
+          const source = new URL(article.url).hostname;
+          const image = article.urlToImage || [
+            "https://tse4.mm.bing.net/th?id=OIP.T8booKW8eX8PQ5qXHMEpawHaEK&pid=Api",
+            "https://tse1.mm.bing.net/th?id=OIP.NNM7pnCPMKKm_E126puDmAHaEK&r=0&pid=Api",
+            "https://tse3.mm.bing.net/th?id=OIP.zlhDup5cJ10Xd-adt9xq2AHaE7&pid=Api"
+          ][i % 3];
+
+          const card = document.createElement("div");
+          card.className = "bg-white rounded-xl shadow hover:shadow-lg transition duration-300 overflow-hidden";
+
+          card.innerHTML = `
+            <img src="${image}" alt="Article Image" class="w-full h-48 object-cover">
+            <div class="p-4">
+              <div class="flex items-center space-x-2 mb-2">
+                <img src="https://www.google.com/s2/favicons?domain=${source}" class="w-5 h-5" alt="favicon">
+                <span class="text-xs text-gray-500">${source}</span>
+              </div
