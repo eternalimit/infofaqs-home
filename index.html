@@ -1,146 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Trusted Links with Favicons</title>
-  <meta name="description" content="Auto-rendered links with dynamic favicons for reliable, elegant link presentation.">
-  <link rel="icon" href="https://www.google.com/s2/favicons?domain=openai.com" type="image/png">
-  <style>
-    body {
-      font-family: system-ui, sans-serif;
-      background: #f7f9fb;
-      color: #222;
-      margin: 0;
-      padding: 2rem;
-      max-width: 800px;
-      margin-inline: auto;
-    }
-
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    .link-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .link-item {
-      display: flex;
-      align-items: center;
-      background: #fff;
-      padding: 1rem;
-      border-radius: 8px;
-      border: 1px solid #eee;
-      transition: background 0.2s ease;
-    }
-
-    .link-item:hover {
-      background: #f0f4ff;
-    }
-
-    .link-item img {
-      width: 20px;
-      height: 20px;
-      margin-right: 12px;
-      flex-shrink: 0;
-    }
-
-    .link-item a {
-      font-size: 1rem;
-      color: #0073e6;
-      text-decoration: none;
-      word-break: break-word;
-    }
-
-    .link-item a:hover {
-      text-decoration: underline;
-    }
-
-    footer {
-      margin-top: 2rem;
-      text-align: center;
-      font-size: 0.85rem;
-      color: #888;
-    }
-  </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>InfoFAQs | MASTER.ORIGIN Edition 1</title>
+<meta name="description" content="InfoFAQs Edition 1: building a customer-first online marketplace, one verified milestone at a time.">
+<style>
+:root{font-family:system-ui,-apple-system,sans-serif;color:#14253b;background:#f5f7fb}
+*{box-sizing:border-box}body{margin:0}header,footer{background:#102d4b;color:white;padding:1.2rem max(1.25rem,calc((100vw - 1050px)/2))}
+header{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+header a,footer a{color:#dcefff}main{max-width:1050px;margin:auto;padding:4rem 1.25rem}h1{font-size:clamp(2.5rem,6vw,4.5rem);line-height:1.1;margin:.5rem 0 1.5rem}
+.eyebrow{font-weight:800;letter-spacing:.12em;color:#285987}.lead{font-size:1.25rem;max-width:700px;line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:2rem 0}
+article{background:white;border:1px solid #dce3eb;border-radius:14px;padding:1.4rem}
+a.button{display:inline-block;background:#154d80;color:white;padding:.85rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:700}
+a:focus-visible{outline:3px solid #e09b1d;outline-offset:3px}
+small{opacity:.85}section{margin-top:3rem}
+</style>
 </head>
 <body>
-
-  <h1>Trusted Links</h1>
-
-  <div class="link-list">
-
-    <!-- Original External Links -->
-    <div class="link-item">
-      <img src="https://www.google.com/s2/favicons?domain=openai.com" alt="OpenAI favicon">
-      <a href="https://openai.com" target="_blank" rel="noopener noreferrer">openai.com</a>
-    </div>
-
-    <div class="link-item">
-      <img src="https://www.google.com/s2/favicons?domain=vox-cdn.com" alt="Vox favicon">
-      <a href="https://vox-cdn.com/image" target="_blank" rel="noopener noreferrer">vox-cdn.com/image</a>
-    </div>
-
-    <div class="link-item">
-      <img src="https://www.google.com/s2/favicons?domain=nytimes.com" alt="NYTimes favicon">
-      <a href="https://nytimes.com" target="_blank" rel="noopener noreferrer">nytimes.com</a>
-    </div>
-
-    <!-- ClarityOS Internal Pages -->
-    <div class="link-item">
-      <img src="https://www.google.com/s2/favicons?domain=github.io" alt="Clarity favicon">
-      <a href="clarityos_whitepaper.html" target="_blank" rel="noopener noreferrer">ClarityOS: Overview</a>
-    </div>
-
-    <div class="link-item">
-      <img src="https://www.google.com/s2/favicons?domain=github.io" alt="Clarity favicon">
-      <a href="abstract.html" target="_blank" rel="noopener noreferrer">Abstract</a>
-    </div>
-
-    <div class="link-item">
-      <img src="https://www.google.com/s2/favicons?domain=github.io" alt="Clarity favicon">
-      <a href="system_architecture.html" target="_blank" rel="noopener noreferrer">System Architecture</a>
-    </div>
-
-    <div class="link-item">
-      <img src="https://www.google.com/s2/favicons?domain=github.io" alt="Clarity favicon">
-      <a href="infofaqs_system.html" target="_blank" rel="noopener noreferrer">InfoFAQs System</a>
-    </div>
-
-    <div class="link-item">
-      <img src="https://www.google.com/s2/favicons?domain=github.io" alt="Clarity favicon">
-      <a href="symbolic_chain_engines.html" target="_blank" rel="noopener noreferrer">Symbolic Chain Engines</a>
-    </div>
-
-    <div class="link-item">
-      <img src="https://www.google.com/s2/favicons?domain=github.io" alt="Clarity favicon">
-      <a href="security_ethics.html" target="_blank" rel="noopener noreferrer">Security & Ethics</a>
-    </div>
-
-    <div class="link-item">
-      <img src="https://www.google.com/s2/favicons?domain=github.io" alt="Clarity favicon">
-      <a href="use_cases.html" target="_blank" rel="noopener noreferrer">Use Cases</a>
-    </div>
-
-    <div class="link-item">
-      <img src="https://www.google.com/s2/favicons?domain=github.io" alt="Clarity favicon">
-      <a href="legal_compliance.html" target="_blank" rel="noopener noreferrer">Legal & Compliance</a>
-    </div>
-
-    <div class="link-item">
-      <img src="https://www.google.com/s2/favicons?domain=github.io" alt="Clarity favicon">
-      <a href="future_work.html" target="_blank" rel="noopener noreferrer">Future Work</a>
-    </div>
-
-  </div>
-
-  <footer>
-    Favicons via <a href="https://www.google.com/s2/favicons" target="_blank" rel="noopener noreferrer">Google</a>. This site does not track or store user data.
-  </footer>
-
-</body>
-</html>
+<header><strong>InfoFAQs</strong><nav aria-label="Main navigation"><a href="#mission">Our mission</a> &nbsp; <a href="#roadmap">Roadmap</a> &nbsp; <a href="marketplace-preview.html">Marketplace preview</a></nav></header>
+<main>
+<p class="eyebrow">MASTER.ORIGIN · EDITION 1 · OPEN</p>
+<h1>This is a marathon.<br>This ain’t a sprint.</h1>
+<p class="lead">Our finish line: build an online marketplace that earns its place alongside the biggest names in commerce through trust, choice, dependable service, and verified execution.</p>
+<a class="button" href="marketplace-preview.html">Explore the marketplace preview</a>
+<section id="mission"><h2>Our mission</h2><p>InfoFAQs is building a customer-first commerce platform connecting shoppers, products, and sellers. We measure progress by working features, meaningful tests, and reliable customer outcomes.</p></section>
+<section id="roadmap"><h2>Our marketplace marathon</h2><div class="grid">
+<article><h3>1. Build trust</h3><p>Customer accounts, secure access, clear product information, and accessible shopping.</p></article>
+<article><h3>2. Make commerce work</h3><p>Shopping carts, accurate pricing, reliable checkout, and order management.</p></article>
+<article><h3>3. Deliver value</h3><p>Fulfillment, customer support, seller tools, and transparent service.</p></article>
+<article><h3>4. Earn scale</h3><p>Grow product selection and customers through measurable quality and sustainable economics.</p></article>
+</div></section>
+<section aria-label="Development status"><h2>Building mile by mile</h2><p>The linked marketplace is a development preview. Customer registration, live checkout, payment processing, and fulfillment will open after operational verification.</p></section>
+</main>
+<footer><small>© 2026 Richard Stein. All Rights Reserved. Edition 1 public business direction. Proprietary rights reserved.</small></footer>
+</body></html>
