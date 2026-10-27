@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Search InfoFAQs | The Cube</title>
+<meta name="description" content="Search the public InfoFAQs site index. Search terms remain in the page URL and are not sent to a search service.">
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#f7f3e9;background:#070e1b}*{box-sizing:border-box}body{margin:0;min-height:100vh;display:flex;flex-direction:column}a{color:#ffdb96}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #ffce73;outline-offset:3px}header{border-bottom:1px solid #33455e;background:#080e19;padding:1rem max(1.2rem,calc((100vw - 1100px)/2));display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}.brand{font-size:1.7rem;font-weight:900;text-decoration:none;color:#f7f3e9}.brand span{color:#ffcf79}nav{display:flex;gap:1rem;flex-wrap:wrap}nav a{text-decoration:none;font-weight:700;color:#f7f3e9}main{width:min(100% - 2rem,900px);margin:auto;padding:3rem 0}.eyebrow{color:#ffd080;font-weight:800;letter-spacing:.15em}h1{font-size:clamp(2rem,7vw,3.4rem);line-height:1.05;color:#ffdb96;margin:.7rem 0}p{line-height:1.6;color:#d4deec}.search-form{display:flex;gap:.7rem;margin:1.5rem 0;flex-wrap:wrap}.search-form input{flex:1;min-width:220px;padding:.9rem 1rem;border:1px solid #71819a;border-radius:8px;background:#0a1220;color:#f7f3e9;font:inherit}.search-form button{border:0;border-radius:8px;background:#ffd17c;color:#101521;padding:.9rem 1.2rem;font:inherit;font-weight:850;cursor:pointer}.hint,.notice{border-left:4px solid #e3b65b;background:#121e32;padding:1rem 1.2rem;margin:1.25rem 0;color:#dce6f4}.result{border:1px solid #43506a;background:linear-gradient(145deg,#172b48,#101827);border-radius:14px;padding:1.3rem;margin:1rem 0}.result h2{color:#ffd17c;margin:.1rem 0 .5rem}.result p{margin:.5rem 0}.meta{font-size:.9rem;color:#b9c8db}.empty{border:1px dashed #71819a;border-radius:12px;padding:1.2rem;color:#d4deec}footer{text-align:center;border-top:1px solid #34445b;padding:1.5rem;color:#ccd4df;font-size:.9rem}footer a{margin:0 .5rem}
+</style>
+</head>
+<body>
+<header><a class="brand" href="index.html">Info<span>FAQs</span>.com</a><nav aria-label="Main navigation"><a href="index.html">Home</a><a href="login.html">Alpha login</a><a href="order-form.html">Custom image order</a></nav></header>
+<main>
+<div class="eyebrow">THE CUBE · SITE SEARCH</div>
+<h1>Search InfoFAQs</h1>
+<p>Search the public pages indexed here. The search runs in your browser; it does not send your term to an external search service.</p>
+<form id="search-form" class="search-form" role="search" action="search.html" method="get">
+<label for="q" class="sr-only" style="position:absolute;left:-10000px">Search term</label>
+<input id="q" name="q" type="search" maxlength="120" autocomplete="off" placeholder="Try invalid_state" required>
+<button type="submit">Search</button>
+</form>
+<p class="hint">The search term appears in this page’s URL so you can bookmark or share the search. Don’t put passwords, access tokens, authorization codes, callback URLs, or private request IDs in a search.</p>
+<p id="status" class="meta" aria-live="polite"></p>
+<section id="results" aria-live="polite"></section>
+</main>
+<footer>© 2026 Richard Stein. All Rights Reserved. · Edition 1 public preview · <a href="mailto:bigtreeorders@gmail.com">Contact</a></footer>
+<script>
+(function(){
+  const items = [
+    {title:"OAuth sign-in error: invalid_state",keywords:"invalid_state invalid state oauth callback csrf request id",url:"#oauth-state",body:"This code alone does not identify the provider or root cause. In OAuth, the state value ties a callback to the login request and helps protect against request forgery. A mismatch can mean the callback no longer matches the active request; an interrupted or expired login flow is one possibility. Restart sign-in from the original app in the same browser session, and do not reopen or refresh an old callback URL. Keep the request ID private and share it only with the relevant service’s support team.",sources:[["Supabase Auth error codes","https://supabase.com/docs/guides/auth/debugging/error-codes"],["OAuth 2.0 (RFC 6749)","https://www.rfc-editor.org/rfc/rfc6749.html"]]},
+    {title:"Alpha Group login preview",keywords:"alpha group login account sign in",url:"login.html",body:"The sign-in page is a preview. Authentication is not active on this static page.",sources:[]},
+    {title:"Custom image order preview",keywords:"custom image order form artwork prompt",url:"order-form.html",body:"The order form is a preview; it does not collect or send data.",sources:[]},
+    {title:"Marketplace preview",keywords:"marketplace cart payment",url:"marketplace-preview.html",body:"The marketplace is a development preview, not live checkout.",sources:[]},
+    {title:"The Cube and InfoFAQs homepage",keywords:"cube amusements newsroom vault homepage",url:"index.html",body:"Explore The Cube, amusements, newsroom, and public releases.",sources:[]}
+  ];
+  const params = new URLSearchParams(window.location.search);
+  const term = (params.get("q") || "").trim().slice(0,120);
+  const input = document.getElementById("q");
+  const resultRoot = document.getElementById("results");
+  const status = document.getElementById("status");
+  input.value = term;
+  if (!term) {
+    status.textContent = "Enter a term to search the public InfoFAQs index.";
+    return;
+  }
+  const normalized = term.toLocaleLowerCase().replace(/[_-]+/g," ").replace(/\s+/g," ");
+  const hits = items.filter(item => (item.title + " " + item.keywords + " " + item.body).toLocaleLowerCase().replace(/[_-]+/g," ").includes(normalized));
+  status.textContent = "Search URL: " + window.location.origin + window.location.pathname + "?q=" + encodeURIComponent(term);
+  if (!hits.length) {
+    resultRoot.innerHTML = '<div class="empty">No matching page in this small public index. The term was not sent to a web search provider.</div>';
+    return;
+  }
+  for (const item of hits) {
+    const article = document.createElement("article");
+    article.className = "result";
+    const heading = document.createElement("h2");
+    heading.textContent = item.title;
+    const body = document.createElement("p");
+    body.textContent = item.body;
+    const link = document.createElement("a");
+    link.href = item.url;
+    link.textContent = "Open page";
+    article.append(heading, body, link);
+    for (const source of item.sources) {
+      const p = document.createElement("p");
+      p.className = "meta";
+      const a = document.createElement("a");
+      a.href = source[1];
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.textContent = source[0];
+      p.append(a);
+      article.append(p);
+    }
+    resultRoot.append(article);
+  }
+})();
+</script>
+</body>
+</html>
