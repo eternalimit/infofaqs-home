@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Custom Image Order | InfoFAQs</title>
+<meta name="description" content="Preview of the InfoFAQs custom NFT-style image order form.">
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#f7f3e9;background:#070e1b}*{box-sizing:border-box}body{margin:0;min-height:100vh;display:flex;flex-direction:column}a{color:inherit}a:focus-visible,button:focus-visible{outline:3px solid #ffce73;outline-offset:4px}header{border-bottom:1px solid #33455e;background:#080e19;padding:1rem max(1.2rem,calc((100vw - 1100px)/2));display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}.brand{font-size:1.7rem;font-weight:900;text-decoration:none}.brand span{color:#ffcf79}nav{display:flex;gap:1rem;flex-wrap:wrap}nav a{text-decoration:none;font-weight:700}main{width:min(100% - 2rem,760px);margin:auto;padding:3rem 0}.eyebrow{color:#ffd080;font-weight:800;letter-spacing:.15em}.card{margin-top:1rem;padding:clamp(1.3rem,5vw,2.2rem);border:1px solid #43506a;border-radius:18px;background:linear-gradient(145deg,#172b48,#101827);box-shadow:0 20px 70px #0005}h1{font-size:clamp(2rem,8vw,3.4rem);line-height:1.05;color:#ffdb96;margin:.7rem 0}p{line-height:1.6;color:#d4deec}.notice{border-left:4px solid #e3b65b;background:#0c1524;padding:1rem;margin:1.25rem 0}.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:0 1rem}.field{display:block;margin:1rem 0;color:#f7f3e9;font-weight:700}.field input,.field textarea,.field select{display:block;width:100%;padding:.85rem;margin-top:.4rem;border:1px solid #52627b;border-radius:8px;background:#0a1220;color:#e8edf4}.field textarea{min-height:130px;resize:vertical}.field input:disabled,.field textarea:disabled,.field select:disabled{opacity:.65}.button{display:inline-block;border:0;border-radius:8px;background:#43506a;color:#e2e6ee;padding:.9rem 1.2rem;font-weight:800}.terms{font-size:.95rem}.actions{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1.3rem}.secondary{display:inline-block;padding:.9rem 1.2rem;border:1px solid #71819a;border-radius:8px;text-decoration:none;font-weight:700}footer{text-align:center;border-top:1px solid #34445b;padding:1.5rem;color:#ccd4df;font-size:.9rem}
+</style>
+</head>
+<body>
+<header><a class="brand" href="index.html">Info<span>FAQs</span>.com</a><nav aria-label="Main navigation"><a href="index.html">Home</a><a href="login.html">Alpha login</a></nav></header>
+<main>
+<div class="eyebrow">THE CUBE · CUSTOM ARTWORK</div>
+<section class="card" aria-labelledby="order-title">
+<h1 id="order-title">Share your vision</h1>
+<p>Send your concept and creative prompt. We’ll review the brief, confirm scope and price, then create a custom NFT-style image. Stripe payment and delivery will be arranged after the order terms are confirmed.</p>
+<div class="notice" role="status"><strong>Order form preview.</strong><br>This page is not connected to secure intake, storage, authentication, or Stripe checkout. The fields are disabled and nothing is collected or sent.</div>
+<form aria-label="Custom image order form preview">
+<div class="fields">
+<label class="field" for="customer-name">Your name<input id="customer-name" type="text" disabled placeholder="Name"></label>
+<label class="field" for="customer-email">Email<input id="customer-email" type="email" disabled placeholder="you@example.com"></label>
+</div>
+<label class="field" for="vision">What should the image show?<textarea id="vision" disabled placeholder="Describe your idea, style, and intended use."></textarea></label>
+<label class="field" for="references">Reference files<input id="references" type="file" disabled multiple></label>
+<label class="field" for="rights">Intended use<select id="rights" disabled><option>Select an intended use</option><option>Personal</option><option>Commercial</option><option>Other</option></select></label>
+<p class="terms">Final-image ownership and usage rights will be stated in written order terms before payment. “NFT-style image” describes the artwork format; this form does not mint an NFT.</p>
+<button class="button" type="button" disabled aria-disabled="true">Order intake unavailable</button>
+</form>
+<div class="actions"><a class="secondary" href="mailto:bigtreeorders@gmail.com?subject=Custom%20InfoFAQs%20image%20inquiry">Ask about a custom image</a><a class="secondary" href="login.html">Alpha group login</a></div>
+</section>
+</main>
+<footer>© 2026 Richard Stein. All Rights Reserved. · Edition 1 public preview</footer>
+</body>
+</html>
