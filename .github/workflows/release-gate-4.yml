@@ -1,0 +1,60 @@
+name: Release gate 4 - static and browser checks
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Static release checks
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from html.parser import HTMLParser
+          import re
+          page=Path('index.html').read_text()
+          assert '10-faqs.html' in page, '10 FAQs navigation missing'
+          assert 'marketplace-preview.html' in page, 'Marketplace navigation missing'
+          assert 'Private Edition 0 materials are not published' in page, 'Edition 0 privacy notice missing'
+          assert 'instagram.com/richrich5555555/' in page, 'Instagram link missing'
+          assert 'rel="me noopener noreferrer"' in page, 'External link protection missing'
+          assert Path('10-faqs.html').is_file(), '10 FAQs page missing'
+          assert Path('marketplace-preview.html').is_file(), 'Marketplace preview missing'
+          print('Static checks PASS. CATBOT 100 / Human Green Button preservation requires separate source receipts.')
+          PY
+      - name: Install Playwright Chromium
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Desktop and mobile browser smoke checks
+        run: |
+          node <<'JS'
+          const { chromium, devices } = require('playwright');
+          const fs = require('fs');
+          (async () => {
+            const browser = await chromium.launch({headless:true});
+            for (const [name, options] of [['desktop',{viewport:{width:1440,height:900}}],['mobile',devices['iPhone 13']]]) {
+              const context = await browser.newContext(options);
+              const page = await context.newPage();
+              await page.goto('file://' + process.cwd() + '/index.html');
+              await page.locator('a[href="10-faqs.html"]').first().waitFor();
+              await page.locator('a[href="https://www.instagram.com/richrich5555555/"]').waitFor();
+              if (await page.locator('body').evaluate(el => el.scrollWidth > window.innerWidth + 2)) throw Error(name+' horizontal overflow');
+              await page.screenshot({path:name+'-smoke.png',fullPage:true});
+              console.log(name+' browser smoke PASS');
+              await context.close();
+            }
+            await browser.close();
+          })().catch(e=>{console.error(e);process.exit(1)});
+          JS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-smoke-screenshots
+          path: '*-smoke.png'
+          if-no-files-found: ignore
