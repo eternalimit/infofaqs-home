@@ -27,6 +27,8 @@ jobs:
           assert Path('marketplace-preview.html').is_file(), 'Marketplace preview missing'
           print('Static checks PASS. CATBOT 100 / Human Green Button preservation requires separate source receipts.')
           PY
+      - name: Marketplace regression checks
+        run: python3 -m unittest discover -s tests -v
       - name: Install Playwright Chromium
         run: |
           npm install --no-save playwright@1.56.1
@@ -45,7 +47,9 @@ jobs:
               await page.locator('a[href="10-faqs.html"]').first().waitFor();
               await page.locator('a[href="https://www.instagram.com/richrich5555555/"]').waitFor();
               if (await page.locator('body').evaluate(el => el.scrollWidth > window.innerWidth + 2)) throw Error(name+' horizontal overflow');
-              await page.screenshot({path:name+'-smoke.png',fullPage:true});
+              const screenshotPath = name+'-smoke.png';
+              await page.screenshot({path:screenshotPath,fullPage:true});
+              if (fs.statSync(screenshotPath).size === 0) throw Error(name+' screenshot is empty');
               console.log(name+' browser smoke PASS');
               await context.close();
             }
@@ -56,5 +60,7 @@ jobs:
         if: always()
         with:
           name: browser-smoke-screenshots
-          path: '*-smoke.png'
-          if-no-files-found: ignore
+          path: |
+            desktop-smoke.png
+            mobile-smoke.png
+          if-no-files-found: error
