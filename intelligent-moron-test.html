@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>InfoFAQs Intelligent Moron Test — Edition 1</title>
+<meta name="description" content="A five-card InfoFAQs puzzle with a downloadable, locally generated completion receipt.">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"TechArticle","headline":"InfoFAQs Intelligent Moron Test AI System Manual","alternativeHeadline":"The WIN-WIN-WIN Deterministic Ledger Framework","author":{"@type":"Person","name":"Richard Stein","alternateName":"richrich5555555","sameAs":"https://www.instagram.com/richrich5555555/"},"publisher":{"@type":"Organization","name":"Your Company Incorporated","url":"https://infofaqs.com"},"version":"Edition 1.0.1","creativeWorkStatus":"Draft"}
+</script>
+<style>
+:root{color-scheme:dark;font-family:Consolas,monospace;background:#05070c;color:#fff}*{box-sizing:border-box}body{margin:0;padding:24px}main{max-width:750px;margin:24px auto;padding:28px;background:#0d111a;border:2px solid #00ff66}h1{color:#00ff66;font-size:1.6rem}p{line-height:1.6}.muted{color:#b5c1d3}button,input{font:inherit;padding:16px;max-width:100%;border:1px solid #7083a0;background:#161f30;color:white}button{cursor:pointer;margin:6px}button:hover{background:#254362}button:focus-visible,input:focus-visible{outline:3px solid #fff;outline-offset:3px}input{display:block;width:100%;margin:12px 0}.matrix{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));max-width:300px;gap:8px}.matrix button{margin:0;min-height:75px;background:#0044ff}.matrix .target{background:#00ff66;color:#000}.trap{background:#a61d18}pre{white-space:pre-wrap;overflow-wrap:anywhere;padding:16px;background:#000;color:#39ff14}a{color:#8dffb7}[hidden]{display:none!important}@media(max-width:440px){body{padding:12px}main{padding:18px}h1{font-size:1.25rem}}
+</style>
+</head>
+<body>
+<main>
+<p class="muted">INFOFAQS · EDITION 1 · LOCAL PUZZLE</p>
+<h1>INTELLIGENT MORON ENGINE</h1>
+<p id="counter">CARD 1 OF 5</p>
+<p id="feedback" role="status" aria-live="polite"></p>
+<section id="card1" aria-labelledby="heading1"><h2 id="heading1" tabindex="-1">Card 1</h2><p>Choose YES to begin the validation sequence.</p><button class="trap" data-action="fault">DO NOT PRESS</button><button data-action="one">YES</button><button data-action="one">YES</button><button data-action="one">YES</button></section>
+<section id="card2" aria-labelledby="heading2" hidden><h2 id="heading2" tabindex="-1">Card 2</h2><p>Select the green WIN node.</p><div class="matrix">
+<button data-action="fault" aria-label="Blue node, row 1 column 1">BLUE</button><button data-action="fault" aria-label="Blue node, row 1 column 2">BLUE</button><button data-action="fault" aria-label="Blue node, row 1 column 3">BLUE</button>
+<button data-action="fault" aria-label="Blue node, row 2 column 1">BLUE</button><button class="target" data-action="two" aria-label="Green WIN node, row 2 column 2">WIN</button><button data-action="fault" aria-label="Blue node, row 2 column 3">BLUE</button>
+<button data-action="fault" aria-label="Blue node, row 3 column 1">BLUE</button><button data-action="fault" aria-label="Blue node, row 3 column 2">BLUE</button><button data-action="fault" aria-label="Blue node, row 3 column 3">BLUE</button></div></section>
+<section id="card3" aria-labelledby="heading3" hidden><h2 id="heading3" tabindex="-1">Card 3</h2><form id="answer-form"><label for="answer">Enter YES three times, with spaces or joined together.</label><input id="answer" autocomplete="off" required><button type="submit">COMMIT STATE</button></form></section>
+<section id="card4" aria-labelledby="heading4" hidden><h2 id="heading4" tabindex="-1">Card 4</h2><p>Select WIN WIN WIN to continue.</p><button class="trap" data-action="fault">ABORT SEQUENCE</button><button data-action="four">WIN WIN WIN</button></section>
+<section id="card5" aria-labelledby="heading5" hidden><h2 id="heading5" tabindex="-1">Card 5</h2><p>Confirm the final puzzle step.</p><button data-action="five">YES YES YES</button><button class="trap" data-action="fault">NO NO NO</button></section>
+<section id="finale" hidden><h2 id="heading6" tabindex="-1">WIN-WIN-WIN</h2><p>Puzzle completed locally. This receipt records this browser session; it does not certify a deployment or an independent audit.</p><pre id="ledger"></pre><button id="download" disabled>Download receipt JSON</button></section>
+<button id="restart">Restart puzzle</button>
+<p class="muted">Receipts are held in memory until downloaded. No server submission or permanent commit occurs.</p>
+<p><a href="https://infofaqs.com">InfoFAQs home</a></p>
+<footer>© 2026 Richard Stein. All Rights Reserved.</footer>
+</main>
+<script>
+(() => {
+'use strict';
+const get = id => document.getElementById(id);
+let stage = 1, events = [], receipt = null, generation = 0;
+const now = () => new Date().toISOString();
+function show() {
+ for(let i=1;i<=5;i++) get('card'+i).hidden = stage !== i;
+ get('finale').hidden = stage !== 6;
+ get('counter').textContent = stage === 6 ? 'SEQUENCE COMPLETE' : `CARD ${stage} OF 5`;
+ get('heading'+stage).focus();
+}
+function reset(message='Puzzle restarted.') {
+ generation++; stage=1; events=[]; receipt=null;
+ get('answer').value=''; get('ledger').textContent=''; get('download').disabled=true;
+ get('feedback').textContent=message; show();
+}
+async function step(expected, action) {
+ if(stage !== expected || events.length !== expected-1) return;
+ events.push({stage:expected,action,timestamp:now()});
+ stage++; get('feedback').textContent=''; show();
+ if(stage === 6) await finish();
+}
+async function finish() {
+ const run = generation;
+ if(stage!==6 || events.length!==5 || !events.every((e,i)=>e.stage===i+1)) return;
+ if(!globalThis.crypto?.subtle) {get('ledger').textContent='Receipt unavailable: this browser requires a secure context for SHA-256. Serve this file over HTTPS or localhost.';return;}
+ const payload = JSON.stringify({schema:'infofaqs-local-receipt-v1',edition:'1.0.1',status:'LOCAL_PUZZLE_COMPLETED',completedAt:now(),events:events.map(e=>({...e})),scope:'Client-reported puzzle events; no deployment or permanent storage attestation.'});
+ try {
+  const bytes = new TextEncoder().encode(payload);
+  const hash = await crypto.subtle.digest('SHA-256',bytes);
+  if(run !== generation || stage !== 6) return;
+  const sha256=Array.from(new Uint8Array(hash),b=>b.toString(16).padStart(2,'0')).join('');
+  receipt={algorithm:'SHA-256',encoding:'UTF-8',payload,sha256};
+  get('ledger').textContent=JSON.stringify(receipt,null,2);get('download').disabled=false;
+ } catch(error) {
+  if(run===generation) get('ledger').textContent='Receipt generation failed. Restart to retry.';
+ }
+}
+const rules={one:[1,'YES'],two:[2,'GREEN_WIN'],four:[4,'WIN WIN WIN'],five:[5,'YES YES YES']};
+document.querySelectorAll('[data-action]').forEach(button => button.addEventListener('click',() => {
+ if(button.closest('section').hidden) return;
+ const action=button.dataset.action;
+ if(action==='fault') {reset('Sequence reset. Try again.');return;}
+ const rule=rules[action];if(rule) void step(...rule);
+}));
+get('answer-form').addEventListener('submit',event=>{
+ event.preventDefault();if(stage!==3)return;
+ const answer=get('answer').value.trim().toUpperCase();
+ if(answer==='YES YES YES'||answer==='YESYESYES')void step(3,'YES YES YES');
+ else reset('Answer did not match. Sequence reset.');
+});
+get('restart').addEventListener('click',()=>reset());
+get('download').addEventListener('click',()=>{
+ if(!receipt)return;
+ const url=URL.createObjectURL(new Blob([JSON.stringify(receipt,null,2)+'\n'],{type:'application/json'}));
+ const anchor=document.createElement('a');anchor.href=url;anchor.download='InfoFAQs_Edition1_Receipt.json';
+ document.body.appendChild(anchor);anchor.click();anchor.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+});
+})();
+</script>
+</body>
+</html>
