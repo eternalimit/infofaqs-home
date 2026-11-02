@@ -5,6 +5,8 @@ from html.parser import HTMLParser
 from urllib.parse import urlparse
 import xml.etree.ElementTree as ET
 import sys
+import subprocess
+import re
 
 root = Path(__file__).resolve().parents[1]
 errors = []
@@ -72,6 +74,24 @@ if sitemap.is_file():
                 check((root / path).is_file(), f"Sitemap path missing: {path}")
     except ET.ParseError as exc:
         errors.append(f"Sitemap XML invalid: {exc}")
+
+# Scan tracked text files for merge conflicts and private key markers.
+tracked = subprocess.run(["git", "ls-files", "-z"], cwd=root, capture_output=True, check=True).stdout
+for item in tracked.split(bytes([0])):
+    if not item:
+        continue
+    relative = item.decode("utf-8", errors="replace")
+    target = root / relative
+    if not target.is_file() or target.stat().st_size > 2_000_000:
+        continue
+    data = target.read_bytes()
+    if bytes([0]) in data:
+        continue
+    for number, line in enumerate(data.decode("utf-8", errors="replace").splitlines(), 1):
+        if line.startswith(("<<<<<<< ", ">>>>>>> ")) or line.strip() == "=======":
+            errors.append(f"Merge conflict marker: {relative}:{number}")
+        if re.search(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----", line):
+            errors.append(f"Private key marker: {relative}:{number}")
 
 if errors:
     print("FAIL:\n" + "\n".join("- " + e for e in errors))
