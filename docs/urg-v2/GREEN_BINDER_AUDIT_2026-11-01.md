@@ -3,7 +3,9 @@
 Status: EDITION_0_HOLD
 Production mutation: LOCKED
 Independent SHA-256 verification: PENDING
-Release: NOT AUTHORIZED
+Edition 1 release authorization: RECEIVED (user instruction)
+Production promotion: PENDING independent security, CI, and integrity checks
+Edition 0 release: NOT AUTHORIZED
 
 ## Original Gmail evidence
 Sender: bigtreeorders@gmail.com
@@ -27,7 +29,7 @@ metadata/knowledge_graph.jsonld | expected 4096 bytes | a8fbc892301de091444bfa29
 2. Compute raw byte count and SHA-256 digest for each item.
 3. Compare against the candidate values. Record PASS/FAIL/MISSING per file.
 4. Preserve source commit/ref, exact file path, size, hash, and audit timestamp.
-5. No production merge or deployment until release gates are separately proven and explicitly authorized.
+5. Edition 1 authorization has been received. Do not claim release PASS or promote production until release gates are independently proven. Preserve Edition 0 HOLD.
 
 ## Scope
 Review-only record, no ZIP bytes included in this GitHub text file.
