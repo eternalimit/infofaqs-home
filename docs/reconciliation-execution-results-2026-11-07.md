@@ -64,3 +64,23 @@ No PRs were merged or closed. No branch was deleted, rebased, or force-pushed. N
 - Compare every branch across all 12 repositories, not only the five selected samples above.
 - Enumerate workflows from repository trees and inspect run history via supported Actions endpoints.
 - Audit dependency manifests, lockfiles, security alerts, secret-scanning status, and branch protection where permissions allow.
+
+
+## Continued execution — remaining PR family comparisons
+
+Additional ownership/CATBOT handoff diffs fetched:
+- `infoFAQs#7` and `chatgpt#5`: exact 2,320-character match to the canonical full handoff diff already compared.
+- `con.way.twit.t#17`, `redx#15`, and `JON.ANON#4`: exact 1,206-character abbreviated variant.
+- `one.uni#2`: separate 1,560-character variant with more detailed receipt notes.
+This means the 11-PR family contains at least three textual variants, not one universal byte-identical duplicate. The previous five-way exact-match conclusion remains valid only for those five PRs.
+
+Additional licensing diffs fetched:
+- `chatgpt#4` and `con.way.twit.t#16`: detailed 1,029-character variant.
+- `redx#14`, `one.uni#1`, and `JON.ANON#3`: shorter 798-character variant.
+These confirm two wording variants across the wider family. Both remain drafts and are not executed licenses.
+
+## CI/status check
+The GitHub combined-status endpoint for `infofaqs-home` main commit `fb3831ec169200ea2513e39da73e55da9a46b681` returned an empty status list. No check contexts were returned for that commit through this endpoint. This does not prove the repository has no Actions runs or no other checks.
+
+## Branch/workflow/security coverage still outstanding
+The available GitHub connector did not return a complete all-branches, all-workflow-runs, branch-protection, dependency-alert, or secret-scanning inventory in this pass. The generic GitHub fetch route rejected the Actions/branches endpoints as disallowed URLs. These categories remain NOT AUDITED; no negative security claim is made.
