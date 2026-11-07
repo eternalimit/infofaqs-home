@@ -1,0 +1,27 @@
+name: Gate 5 production verification
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/gate5_live_verify.py'
+      - '.github/workflows/gate5-production-verification.yml'
+permissions:
+  contents: read
+jobs:
+  live-verification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check production DNS TLS redirects links and SHA-256
+        id: verify
+        run: python3 scripts/gate5_live_verify.py
+      - name: Upload actual Gate 5 receipt even on HOLD
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gate5-production-receipt
+          path: gate5-receipt.json
+          if-no-files-found: warn
+          retention-days: 30
