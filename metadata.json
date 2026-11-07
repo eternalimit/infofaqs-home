@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schema.org",
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": "Richard Gate — One Equals One",
+  "identifier": "richard-gate-1-equals-1",
+  "description": "Public verification principles for InfoFAQs: trace instructions to authorized actions, independently verify results, and publish accurate status and evidence.",
+  "creator": {
+    "@type": "Organization",
+    "name": "Your Company Incorporated"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Your Company Incorporated"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "InfoFAQs",
+    "url": "https://www.infofaqs.com/"
+  },
+  "keywords": [
+    "accountability",
+    "verification",
+    "evidence",
+    "authorized actions",
+    "one equals one"
+  ],
+  "text": "Original instruction → prior authorization → execution → independent verification → receipt → final status. Report completed work only when supported by evidence. Do not invent receipts, hashes, tests, or deployment outcomes.",
+  "inLanguage": "en"
+}
