@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "record_type": "public-attribution-proposal",
+  "edition": "2026.0.1.0.0.1.1",
+  "label": "ECHO",
+  "copyright_notice": "© 2026 Richard Nathan Stein. All rights reserved.",
+  "organization": "Your Company Incorporated",
+  "website": "https://infofaqs.com/",
+  "release_state": "REVIEW_ONLY_NOT_DEPLOYED",
+  "protected_content": [
+    "Private Edition 0",
+    "CATBOT 100",
+    "Human Green Button",
+    "10 FAQs"
+  ],
+  "release_requirements": "Independent PASS 5/5 evidence and separately documented release approval; no automatic merge or deploy."
+}
