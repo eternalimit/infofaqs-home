@@ -1,0 +1,52 @@
+name: Marketplace regression
+on:
+  pull_request:
+    paths:
+      - 'marketplace.html'
+      - '.github/workflows/marketplace-regression.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check marketplace HTML and local navigation
+        shell: python
+        run: |
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from urllib.parse import urlsplit, unquote
+          class Page(HTMLParser):
+              def __init__(self):
+                  super().__init__(convert_charrefs=True)
+                  self.links=[]; self.ids=set(); self.h1=0; self.meta={}
+              def handle_starttag(self, tag, attrs):
+                  a=dict(attrs)
+                  if 'id' in a: self.ids.add(a['id'])
+                  if tag=='a' and 'href' in a: self.links.append(a['href'])
+                  if tag=='h1': self.h1+=1
+                  if tag=='meta' and 'name' in a: self.meta[a['name']]=a.get('content','')
+          raw=Path('marketplace.html').read_text(encoding='utf-8')
+          p=Page(); p.feed(raw); p.close()
+          assert raw.lower().startswith('<!doctype html>'), 'Missing HTML5 doctype'
+          assert raw.rstrip().endswith('</html>'), 'Missing closing html'
+          assert p.h1==1, 'Exactly one H1 required'
+          assert 'width=device-width' in p.meta.get('viewport',''), 'Mobile viewport missing'
+          assert p.meta.get('robots')=='noindex,nofollow', 'Review page must remain noindex'
+          assert 'Edition 0 remains on hold' in raw, 'Edition 0 safeguard missing'
+          assert 'No purchases, payment collection' in raw, 'No-payment notice missing'
+          assert 'prefers-reduced-motion' in raw, 'Reduced motion missing'
+          assert ':focus-visible' in raw, 'Focus visibility missing'
+          assert 'min-height:44px' in raw, 'Touch target minimum missing'
+          assert 'href="#main-content"' in raw and 'main-content' in p.ids, 'Skip link broken'
+          assert not any(x in raw.lower() for x in ['<form', 'stripe.com', 'paypal.com']), 'Checkout UI prohibited'
+          for href in p.links:
+              u=urlsplit(href)
+              if u.scheme in ('mailto','https','http','tel'): continue
+              if u.scheme or u.netloc: raise AssertionError(f'Unexpected URL: {href}')
+              if u.path: assert Path(unquote(u.path)).is_file(), f'Broken local link: {href}'
+              if u.fragment: assert u.fragment in p.ids, f'Broken fragment: {href}'
+          print('PASS: structure, accessibility, mobile, local links, safety')
